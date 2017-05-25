@@ -22,6 +22,7 @@ Remember to configure the plugin in config.json in your home directory inside th
             "mqtt_username": "",
             "mqtt_password": "",
             "mqtt_broker": "mqtt://XXX.XXX.XXX.XXX",
+            "mqtt_client_id": "",
             "command_topic": "",
             "command_payload_home": "",
             "command_payload_away": "",
