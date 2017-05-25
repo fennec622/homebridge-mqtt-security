@@ -4,10 +4,10 @@ var mqtt = require("mqtt");
 module.exports = function(homebridge){
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
-    homebridge.registerAccessory("homebridge-mqtt-security", "Homebridge-MQTT-Security", ParadoxSecuritySystemAccessory);
+    homebridge.registerAccessory("homebridge-mqtt-security", "Homebridge-MQTT-Security", MQTTSecuritySystemAccessory);
 }
 
-function ParadoxSecuritySystemAccessory(log, config) {
+function MQTTSecuritySystemAccessory(log, config) {
     this.log = log;
     this.name = config["name"];
     this.mqtt_broker = config["mqtt_broker"];
@@ -24,7 +24,13 @@ function ParadoxSecuritySystemAccessory(log, config) {
     this.state_payload_off = config["state_payload_off"];
     this.state_payload_triggered = config["state_payload_triggerd"];
 
-	// connect to MQTT broker connection settings
+    // Set accessory information
+    this.getService(Service.AccessoryInformation)
+            .setCharacteristic(Characteristic.Manufacturer, "Homebridge-MQTT-Security")
+            .setCharacteristic(Characteristic.Model, config["name"])
+            .setCharacteristic(Characteristic.SerialNumber, config["mqtt_client_id"]);
+
+	// MQTT broker connection settings
 	//this.mqtt_client_id = 'mqttjs_' + Math.random().toString(16).substr(2, 8);
 	this.options = {
 	    keepalive: 10,
@@ -45,36 +51,41 @@ function ParadoxSecuritySystemAccessory(log, config) {
     	rejectUnauthorized: false
 	};
 
-	// connect to MQTT broker
+	// Connect to MQTT broker
 	this.client = mqtt.connect(this.mqtt_broker, this.options);
 	var that = this;
 	this.client.on('error', function () {
 		that.log('Error event on MQTT');
 	});
 
-    // Set initial Alarm State to disarmed
-    console.log("Setting initial HomeKit state to DISARMED");
+    // Set initial state to disarmed
+    console.log("Setting initial HomeKit state to disarmed");
     that.readstate = Characteristic.SecuritySystemCurrentState.DISARMED;
 
 
    self = this;
     this.client.on('message', function (topic, message) {
         var status = message.toString();
-        console.log("mqtt Alarm State message received:", status);
+        console.log("MQTT state message received:", status);
         switch (status) {
             case self.state_payload_home:
+                // STAY_ARM = 0
                 status = Characteristic.SecuritySystemCurrentState.STAY_ARM;
                 break;
             case self.state_payload_away:
+                // AWAY_ARM = 1
                 status = Characteristic.SecuritySystemCurrentState.AWAY_ARM;
                 break;
             case self.state_payload_night:
+                // NIGHT_ARM = 2
                 status = Characteristic.SecuritySystemCurrentState.NIGHT_ARM;
                 break;
             case self.state_payload_off:
+                // DISARMED = 3
                 status = Characteristic.SecuritySystemCurrentState.DISARMED;
                 break;
             case self.state_payload_triggered:
+                // ALARM_TRIGGERED = 4
                 status = Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED;
                 break;
             default:
@@ -90,30 +101,26 @@ function ParadoxSecuritySystemAccessory(log, config) {
     this.client.subscribe(this.state_topic);
 }
 
-ParadoxSecuritySystemAccessory.prototype = {
+MQTTSecuritySystemAccessory.prototype = {
 
     setTargetState: function(state, callback) {
         this.log("Setting state to %s", state);
         var self = this;
         switch (state) {
             case Characteristic.SecuritySystemTargetState.STAY_ARM:
-                // stayArm = 0
                 mqttstate: config["command_payload_home"];
                 break;
             case Characteristic.SecuritySystemTargetState.AWAY_ARM:
-                // stayArm = 1
                 mqttstate: config["command_payload_away"];
                 break;
             case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
-                // stayArm = 2
                 mqttstate: config["command_payload_night"];
                 break;
             case Characteristic.SecuritySystemTargetState.DISARM:
-                // stayArm = 3
                 mqttstate: config["command_payload_off"];
                 break;
         };
-         // MQTT Publish state   
+         // MQTT publish state   
         this.client.publish(this.command_topic, mqttstate);
         self.securityService.setCharacteristic(Characteristic.SecuritySystemCurrentState, state);
         callback(null, state);
