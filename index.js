@@ -91,13 +91,13 @@ ParadoxSecuritySystemAccessory.prototype = {
                 // stayArm = 0
                 mqttstate = "Stay";
                 break;
-            case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
-                // stayArm = 2
-                mqttstate = "Sleep";
-                break;
             case Characteristic.SecuritySystemTargetState.AWAY_ARM:
                 // stayArm = 1
                 mqttstate = "Arm";
+                break;
+	   case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
+                // stayArm = 2
+                mqttstate = "Sleep";
                 break;
             case Characteristic.SecuritySystemTargetState.DISARM:
                 // stayArm = 3
