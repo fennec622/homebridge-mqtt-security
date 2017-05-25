@@ -12,7 +12,7 @@ This is a lightly modified version of "homebridge-paradox-security-system" (http
     npm install -g homebridge-mqtt-security-system
 
 ## Configuration
-Remember to configure the plugin in config.json in your home directory inside the .homebridge directory.
+Configure the plugin as shown below within config.json (typically located in the ".homebridge" directory).
 
     {
         "accessories": [
