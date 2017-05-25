@@ -22,7 +22,10 @@ Remember to configure the plugin in config.json in your home directory inside th
             "mqtt_password": "",
             "mqtt_server": "mqtt://XXX.XXX.XXX.XXX",
             "command_topic": "",
-            "command_payload_arm
+            "command_payload_home": "",
+            "command_payload_away": "",
+            "command_payload_night": "",
+            "command_payload_off": "",
             "state_topic": "",
             "state_payload_armed_stay": "",
             "state_payload_armed_away": "",
