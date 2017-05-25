@@ -4,8 +4,8 @@ This is a lightly modified version of "homebridge-paradox-security-system" (http
 
 ## Notes
 - Usage of this plugin requires an MQTT broker to be setup, check out Mosquitto (https://github.com/eclipse/mosquitto) if you're in need of one.
-- "command_topic" and associated payloads is what Homebridge will send to your MQTT broker.
-- "state_topic" and associated payloads is what Homebridge will receive from your MQTT broker.
+- "command_topic" and associated payload is what Homebridge will send to your MQTT broker.
+- "state_topic" and associated payload is what Homebridge will receive from your MQTT broker.
 
 ## Installation
 
