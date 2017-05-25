@@ -11,15 +11,17 @@ function ParadoxSecuritySystemAccessory(log, config) {
     this.log = log;
     this.name = config["name"];
     this.mqttserver = config["mqtt_broker"];
+    this.client_Id = config["mqtt_client_id"];
     this.controltopic = config["control_topic"];
     this.statetopic = config["state_topic"];
-    this.armevent = config["armevent"];
-    this.stayevent = config["stayevent"];
-    this.disarmevent = config["disarmevent"];
-    this.triggeredevent = config["triggeredevent"];
+    this.nightevent = config["state_payload_night"];
+    this.armevent = config["state_payload_away"];
+    this.stayevent = config["state_payload_home"];
+    this.disarmevent = config["state_payload_off"];
+    this.triggeredevent = config["state_payload_triggerd"];
 
 	// connect to MQTT broker connection settings
-	this.client_Id = 'mqttjs_' + Math.random().toString(16).substr(2, 8);
+	//this.client_Id = 'mqttjs_' + Math.random().toString(16).substr(2, 8);
 	this.options = {
 	    keepalive: 10,
     	clientId: this.client_Id,
@@ -30,12 +32,12 @@ function ParadoxSecuritySystemAccessory(log, config) {
     	connectTimeout: 30 * 1000,
 		will: {
 			topic: 'WillMsg',
-			payload: 'Connection Closed abnormally..!',
+			payload: 'Connection closed abnormally..!',
 			qos: 0,
 			retain: false
 		},
-	    username: config["mqttusername"],
-	    password: config["mqttpassword"],
+	    username: config["mqtt_username"],
+	    password: config["mqtt_password"],
     	rejectUnauthorized: false
 	};
 
