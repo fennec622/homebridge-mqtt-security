@@ -65,7 +65,7 @@ function ParadoxSecuritySystemAccessory(log, config) {
             case self.state_payload_home:
                 status = Characteristic.SecuritySystemCurrentState.STAY_ARM;
                 break;
-	        case self.state_payload_away:
+            case self.state_payload_away:
                 status = Characteristic.SecuritySystemCurrentState.AWAY_ARM;
                 break;
             case self.state_payload_night:
