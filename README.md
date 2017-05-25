@@ -1,4 +1,4 @@
-# homebridge-mqtt-security-system
+# homebridge-mqtt-security
 
 This is a lightly modified version of "homebridge-paradox-security-system" (https://github.com/MnrGreg/homebridge-paradox-security-system). Both are Homebridge plugins to allow control of a security system via MQTT. For my purposes I'm using Home Assistant as a middle-man to bridge my security system (Honeywell Total Connect) to MQTT, and vice versa.
 
@@ -9,7 +9,7 @@ This is a lightly modified version of "homebridge-paradox-security-system" (http
 
 ## Installation
 
-    npm install -g homebridge-mqtt-security-system
+    npm install -g homebridge-mqtt-security
 
 ## Configuration
 Configure the plugin as shown below within config.json (typically located in the ".homebridge" directory).
