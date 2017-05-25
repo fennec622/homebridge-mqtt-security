@@ -56,11 +56,14 @@ function ParadoxSecuritySystemAccessory(log, config) {
         var status = message.toString();
         console.log("mqtt Alarm State message received:", status);
         switch (status) {
-            case self.armevent:
+            case self.stayevent:
+                status = Characteristic.SecuritySystemCurrentState.STAY_ARM;
+                break;
+	    case self.armevent:
                 status = Characteristic.SecuritySystemCurrentState.AWAY_ARM;
                 break;
             case self.stayevent:
-                status = Characteristic.SecuritySystemCurrentState.STAY_ARM;
+                status = Characteristic.SecuritySystemCurrentState.NIGHT_ARM;
                 break;
             case self.disarmevent:
                 status = Characteristic.SecuritySystemCurrentState.DISARMED;
