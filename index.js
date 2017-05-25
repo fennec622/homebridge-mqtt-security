@@ -24,12 +24,6 @@ function MQTTSecuritySystemAccessory(log, config) {
     this.state_payload_off = config["state_payload_off"];
     this.state_payload_triggered = config["state_payload_triggerd"];
 
-    // Set accessory information
-    this.getService(Service.AccessoryInformation)
-            .setCharacteristic(Characteristic.Manufacturer, "Homebridge-MQTT-Security")
-            .setCharacteristic(Characteristic.Model, config["name"])
-            .setCharacteristic(Characteristic.SerialNumber, config["mqtt_client_id"]);
-
 	// MQTT broker connection settings
 	//this.mqtt_client_id = 'mqttjs_' + Math.random().toString(16).substr(2, 8);
 	this.options = {
@@ -120,7 +114,7 @@ MQTTSecuritySystemAccessory.prototype = {
                 mqttstate: config["command_payload_off"];
                 break;
         };
-         // MQTT publish state   
+         // MQTT Publish state   
         this.client.publish(this.command_topic, mqttstate);
         self.securityService.setCharacteristic(Characteristic.SecuritySystemCurrentState, state);
         callback(null, state);
@@ -154,6 +148,14 @@ MQTTSecuritySystemAccessory.prototype = {
     },
 
     getServices: function() {
+	// Set accessory information
+	var informationService = new Service.AccessoryInformation();
+	
+	informationService
+	.setCharacteristic(Characteristic.Manufacturer, config["manufacturer"])
+	.setCharacteristic(Characteristic.Model, config["model"])
+	.setCharacteristic(Characteristic.SerialNumber, config["serial_number"]);
+
         this.securityService = new Service.SecuritySystem(this.name);
 
         this.securityService
