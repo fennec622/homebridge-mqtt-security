@@ -4,15 +4,15 @@ var mqtt = require("mqtt");
 module.exports = function(homebridge){
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
-    homebridge.registerAccessory("homebridge-paradox", "Homebridge-Paradox", ParadoxSecuritySystemAccessory);
+    homebridge.registerAccessory("homebridge-mqtt-security", "Homebridge-MQTT-Security", ParadoxSecuritySystemAccessory);
 }
 
 function ParadoxSecuritySystemAccessory(log, config) {
     this.log = log;
     this.name = config["name"];
-    this.mqttserver = config["mqttserver"];
-    this.controltopic = config["controltopic"];
-    this.statetopic = config["statetopic"];
+    this.mqttserver = config["mqtt_broker"];
+    this.controltopic = config["control_topic"];
+    this.statetopic = config["state_topic"];
     this.armevent = config["armevent"];
     this.stayevent = config["stayevent"];
     this.disarmevent = config["disarmevent"];
