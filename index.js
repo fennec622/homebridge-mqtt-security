@@ -13,10 +13,10 @@ function MQTTSecuritySystemAccessory(log, config) {
 	this.mqtt_broker = config["mqtt_broker"];
 	this.mqtt_client_id = config["mqtt_client_id"];
 	this.command_topic = config["command_topic"];
-	//this.command_payload_home = config["command_payload_home"];
-	//this.command_payload_away = config["command_payload_away"];
-	//this.command_payload_night = config["command_payload_night"];
-	//this.command_payload_off = config["command_payload_off"];
+	this.command_payload_home = config["command_payload_home"];
+	this.command_payload_away = config["command_payload_away"];
+	this.command_payload_night = config["command_payload_night"];
+	this.command_payload_off = config["command_payload_off"];
 	this.state_topic = config["state_topic"];
 	this.state_payload_home = config["state_payload_home"];
 	this.state_payload_away = config["state_payload_away"];
@@ -104,16 +104,16 @@ MQTTSecuritySystemAccessory.prototype = {
 		var self = this;
 		switch (state) {
 			case Characteristic.SecuritySystemTargetState.STAY_ARM:
-				mqttstate: config["command_payload_home"];
+				mqttstate = this.command_payload_home;
 				break;
 			case Characteristic.SecuritySystemTargetState.AWAY_ARM:
-				mqttstate: config["command_payload_away"];
+				mqttstate = this.command_payload_away;
 				break;
 			case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
-				mqttstate: config["command_payload_night"];
+				mqttstate = this.command_payload_night;
 				break;
 			case Characteristic.SecuritySystemTargetState.DISARM:
-				mqttstate: config["command_payload_off"];
+				mqttstate = this.command_payload_off;
 				break;
 		};
 		// MQTT Publish state   
