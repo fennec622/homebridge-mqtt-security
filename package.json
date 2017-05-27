@@ -1,0 +1,36 @@
+{
+  "name": "homebridge-mqtt-security",
+  "version": "0.1.1",
+  "description": "Homebridge accessory plugin to control your MQTT-enabled security system",
+  "main": "index.js",
+  "dependencies": {
+    "mqtt": "^1.6.3"
+  },
+  "devDependencies": {},
+  "engines": {
+    "homebridge": ">=0.4.0",
+    "node": ">4.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/schmittx/homebridge-mqtt-security/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schmittx/homebridge-mqtt-security.git"
+  },
+  "keywords": [
+    "homebridge-plugin",
+    "mqtt",
+    "security",
+    "alarm"
+  ],
+  "author": "Matt Schmitt",
+  "license": "Apahce-2.0",
+  "bugs": {
+    "url": "https://github.com/schmittx/homebridge-mqtt-security/issues"
+  },
+  "homepage": "https://github.com/schmittx/homebridge-mqtt-security#readme"
+}
