@@ -22,7 +22,7 @@ function MQTTSecuritySystemAccessory(log, config) {
 	this.state_payload_away = config["state_payload_away"];
 	this.state_payload_night = config["state_payload_night"];
 	this.state_payload_off = config["state_payload_off"];
-	this.state_payload_triggered = config["state_payload_triggerd"];
+	this.state_payload_triggered = config["state_payload_triggered"];
 	this.manufacturer = config["manufacturer"];
 	this.serial_number = config["serial_number"];
 	this.model = config["model"];
