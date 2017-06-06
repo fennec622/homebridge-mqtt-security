@@ -1,6 +1,6 @@
 {
   "name": "homebridge-mqtt-security",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Homebridge accessory plugin to control your MQTT-enabled security system",
   "main": "index.js",
   "dependencies": {

@@ -9,23 +9,80 @@ module.exports = function(homebridge){
 
 function MQTTSecuritySystemAccessory(log, config) {
 	this.log = log;
-	this.name = config["name"];
-	this.mqtt_broker = config["mqtt_broker"];
-	this.mqtt_client_id = config["mqtt_client_id"];
+	// Load data from config.json, set to default values if necessary
+	if ((!(config["name"])) || config["name"] == '') {
+		this.name = 'MQTT Security System';
+	} else {
+		this.name = config["name"];
+	}
+	this.mqtt_broker = "mqtt://".concat(config["mqtt_broker_ip"]);
+	if ((!(config["mqtt_client_id"])) || config["mqtt_client_id"] == '') {
+		this.mqtt_client_id = 'homebridge-mqtt-security';
+	} else {
+		this.mqtt_client_id = config["mqtt_client_id"];
+	}
 	this.command_topic = config["command_topic"];
-	this.command_payload_home = config["command_payload_home"];
-	this.command_payload_away = config["command_payload_away"];
-	this.command_payload_night = config["command_payload_night"];
-	this.command_payload_off = config["command_payload_off"];
+	if ((!(config["command_payload_home"])) || config["command_payload_home"] == '') {
+		this.command_payload_home = 'home';
+	} else {
+		this.command_payload_home = config["command_payload_home"];
+	}
+	if ((!(config["command_payload_away"])) || config["command_payload_away"] == '') {
+		this.command_payload_away = 'away';
+	} else {
+		this.command_payload_away = config["command_payload_away"];
+	}
+	if ((!(config["command_payload_night"])) || config["command_payload_night"] == '') {
+		this.command_payload_night = 'night';
+	} else {
+		this.command_payload_night = config["command_payload_night"];
+	}
+	if ((!(config["command_payload_off"])) || config["command_payload_off"] == '') {
+		this.command_payload_off = 'off';
+	} else {
+		this.command_payload_off = config["command_payload_off"];
+	}
 	this.state_topic = config["state_topic"];
-	this.state_payload_home = config["state_payload_home"];
-	this.state_payload_away = config["state_payload_away"];
-	this.state_payload_night = config["state_payload_night"];
-	this.state_payload_off = config["state_payload_off"];
-	this.state_payload_triggered = config["state_payload_triggered"];
-	this.manufacturer = config["manufacturer"];
-	this.serial_number = config["serial_number"];
-	this.model = config["model"];
+	if ((!(config["state_payload_home"])) || config["state_payload_home"] == '') {
+		this.state_payload_home = 'home';
+	} else {
+		this.state_payload_home = config["state_payload_home"];
+	}
+	if ((!(config["state_payload_away"])) || config["state_payload_away"] == '') {
+		this.state_payload_away = 'away';
+	} else {
+		this.state_payload_away = config["state_payload_away"];
+	}
+	if ((!(config["state_payload_night"])) || config["state_payload_night"] == '') {
+		this.state_payload_night = 'night';
+	} else {
+		this.state_payload_night = config["state_payload_night"];
+	}
+	if ((!(config["state_payload_off"])) || config["state_payload_off"] == '') {
+		this.state_payload_off = 'off';
+	} else {
+		this.state_payload_off = config["state_payload_off"];
+	}
+	if ((!(config["state_payload_triggered"])) || config["state_payload_triggered"] == '') {
+		this.state_payload_triggered = 'triggered';
+	} else {
+		this.state_payload_triggered = config["state_payload_triggered"];
+	}
+	if ((!(config["manufacturer"])) || config["manufacturer"] == '') {
+		this.manufacturer = '@schmittx';
+	} else {
+		this.manufacturer = config["manufacturer"];
+	}
+	if ((!(config["serial_number"])) || config["serial_number"] == '') {
+		this.serial_number = '0.1.4';
+	} else {
+		this.serial_number = config["serial_number"];
+	}
+	if ((!(config["model"])) || config["model"] == '') {
+		this.model = 'homebridge-mqtt-security';
+	} else {
+		this.model = config["model"];
+	}
 
 	// MQTT broker connection settings
 	this.options = {
@@ -151,10 +208,10 @@ MQTTSecuritySystemAccessory.prototype = {
 
 	getServices: function() {
 		// Set accessory information
-		var informationService = new Service.AccessoryInformation();
-		if (this.manufacturer) informationService.setCharacteristic(Characteristic.Manufacturer, this.manufacturer);
-		if (this.model) informationService.setCharacteristic(Characteristic.Model, this.model);
-		if (this.serial_number) informationService.setCharacteristic(Characteristic.SerialNumber, this.serial_number);
+		const informationService = new Service.AccessoryInformation();
+		informationService.setCharacteristic(Characteristic.Manufacturer, this.manufacturer);
+		informationService.setCharacteristic(Characteristic.Model, this.model);
+		informationService.setCharacteristic(Characteristic.SerialNumber, this.serial_number);
 
 		this.securityService = new Service.SecuritySystem(this.name);
 
