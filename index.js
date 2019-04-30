@@ -148,7 +148,7 @@ function MQTTSecuritySystemAccessory(log, config) {
 		if (status !== null){
 			self.readstate = status;
 			console.log("HomeKit received state=",self.readstate);
-			self.securityService.getCharacteristic(Characteristic.SecuritySystemCurrentState, self.readstate);
+			self.securityService.setCharacteristic(Characteristic.SecuritySystemCurrentState, self.readstate);
 		};
 	});
 	this.client.subscribe(this.state_topic);
